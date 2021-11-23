@@ -49,21 +49,6 @@ pub fn find_by_kind(kind: String, connection: &PgConnection) -> QueryResult<Vec<
     }
 }
 
-pub fn get_anatomy(connection: &PgConnection) -> QueryResult<Vec<Question>> {
-    let all = questions::table.load::<Question>(&*connection);
-    match all {
-        Ok(all) => {
-            let matches = all
-                .into_iter()
-                .filter(|b| { b.kind.to_lowercase().starts_with("anatomy")
-                })
-                .collect::<Vec<Question>>();
-            return Ok(matches);
-        }
-        Err(e) => Err(e),
-    }
-}
-
 pub fn rand(connection: &PgConnection) -> QueryResult<Question> {
     let mut rng = rand::thread_rng();
     let all = questions::table.load::<Question>(&*connection);

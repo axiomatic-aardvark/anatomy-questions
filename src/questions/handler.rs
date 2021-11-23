@@ -8,7 +8,7 @@ use rocket::response::status;
 use rocket_contrib::json::Json;
 use std::env;
 
-#[get("/")]
+#[get("/anatomy")]
 pub fn all(connection: DbConn) -> Result<Json<Vec<Question>>, Status> {
     questions::repository::all(&connection)
         .map(|questions| Json(questions))
@@ -22,42 +22,35 @@ fn error_status(error: Error) -> Status {
     }
 }
 
-#[get("/<id>")]
+#[get("/anatomy/<id>")]
 pub fn get(id: i32, connection: DbConn) -> Result<Json<Question>, Status> {
     questions::repository::get(id, &connection)
         .map(|question| Json(question))
         .map_err(|error| error_status(error))
 }
 
-#[get("/name/<label>")]
+#[get("/anatomy/name/<label>")]
 pub fn find_by_name(label: String, connection: DbConn) -> Result<Json<Vec<Question>>, Status> {
     questions::repository::find_by_label(label, &connection)
         .map(|question| Json(question))
         .map_err(|error| error_status(error))
 }
 
-#[get("/kind/<kind>")]
+#[get("/anatomy/kind/<kind>")]
 pub fn find_by_kind(kind: String, connection: DbConn) -> Result<Json<Vec<Question>>, Status> {
     questions::repository::find_by_kind(kind, &connection)
         .map(|question| Json(question))
         .map_err(|error| error_status(error))
 }
 
-#[get("/anatomy")]
-pub fn get_anatomy(connection: DbConn) -> Result<Json<Vec<Question>>, Status> {
-    questions::repository::get_anatomy(&connection)
-        .map(|question| Json(question))
-        .map_err(|error| error_status(error))
-}
-
-#[get("/random")]
+#[get("/anatomy/random")]
 pub fn rand(connection: DbConn) -> Result<Json<Question>, Status> {
     questions::repository::rand(&connection)
         .map(|question| Json(question))
         .map_err(|error| error_status(error))
 }
 
-#[post("/", format = "application/json", data = "<question>")]
+#[post("/anatomy", format = "application/json", data = "<question>")]
 pub fn post(
     question: Json<InsertableQuestion>,
     connection: DbConn,
@@ -88,7 +81,7 @@ fn port() -> String {
     env::var("ROCKET_PORT").expect("ROCKET_PORT must be set")
 }
 
-#[put("/<id>", format = "application/json", data = "<question>")]
+#[put("/anatomy/<id>", format = "application/json", data = "<question>")]
 pub fn put(
     id: i32,
     question: Json<InsertableQuestion>,
@@ -99,7 +92,7 @@ pub fn put(
         .map_err(|error| error_status(error))
 }
 
-#[delete("/<id>")]
+#[delete("/anatomy/<id>")]
 pub fn delete(id: i32, connection: DbConn) -> Result<Status, Status> {
     match questions::repository::get(id, &connection) {
         Ok(_) => questions::repository::delete(id, &connection)
