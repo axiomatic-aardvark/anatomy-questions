@@ -10,22 +10,22 @@ pub mod router;
 pub struct Question {
     pub id: i32,
     pub label: String,
+    pub kind: String,
     pub option_one: String,
     pub option_two: String,
     pub option_three: String,
     pub option_four: String,
     pub correct_answers: String,
-    pub kind: String
 }
 
 #[derive(Insertable, Queryable, AsChangeset, Serialize, Deserialize)]
 #[table_name = "anatomy_questions"]
 pub struct InsertableQuestion {
     pub label: String,
+    pub kind: String,
     pub option_one: String,
     pub option_two: String,
     pub option_three: String,
     pub option_four: String,
     pub correct_answers: String,
-    pub kind: String
 }
