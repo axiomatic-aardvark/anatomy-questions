@@ -8,7 +8,7 @@ use rocket::response::status;
 use rocket_contrib::json::Json;
 use std::env;
 
-#[get("/")]
+#[get("/anatomy")]
 pub fn all(connection: DbConn) -> Result<Json<Vec<Question>>, Status> {
     anatomy_questions::repository::all(&connection)
         .map(|questions| Json(questions))
