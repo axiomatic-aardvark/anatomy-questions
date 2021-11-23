@@ -1,22 +1,22 @@
 #![allow(proc_macro_derive_resolution_fallback)]
 
-use crate::questions::Question;
-use crate::questions::InsertableQuestion;
-use crate::schema::questions;
+use crate::anatomy_questions::Question;
+use crate::anatomy_questions::InsertableQuestion;
+use crate::schema::anatomy_questions;
 use diesel;
 use diesel::prelude::*;
 use rand::prelude::*;
 
 pub fn all(connection: &PgConnection) -> QueryResult<Vec<Question>> {
-    questions::table.load::<Question>(&*connection)
+    anatomy_questions::table.load::<Question>(&*connection)
 }
 
 pub fn get(id: i32, connection: &PgConnection) -> QueryResult<Question> {
-    questions::table.find(id).get_result::<Question>(connection)
+    anatomy_questions::table.find(id).get_result::<Question>(connection)
 }
 
 pub fn find_by_label(label: String, connection: &PgConnection) -> QueryResult<Vec<Question>> {
-    let all = questions::table.load::<Question>(&*connection);
+    let all = anatomy_questions::table.load::<Question>(&*connection);
     match all {
         Ok(all) => {
             let matches = all
@@ -33,7 +33,7 @@ pub fn find_by_label(label: String, connection: &PgConnection) -> QueryResult<Ve
 }
 
 pub fn find_by_kind(kind: String, connection: &PgConnection) -> QueryResult<Vec<Question>> {
-    let all = questions::table.load::<Question>(&*connection);
+    let all = anatomy_questions::table.load::<Question>(&*connection);
     match all {
         Ok(all) => {
             let matches = all
@@ -51,7 +51,7 @@ pub fn find_by_kind(kind: String, connection: &PgConnection) -> QueryResult<Vec<
 
 pub fn rand(connection: &PgConnection) -> QueryResult<Question> {
     let mut rng = rand::thread_rng();
-    let all = questions::table.load::<Question>(&*connection);
+    let all = anatomy_questions::table.load::<Question>(&*connection);
 
     match all {
         Ok(all) => {
@@ -64,17 +64,17 @@ pub fn rand(connection: &PgConnection) -> QueryResult<Question> {
 }
 
 pub fn insert(question: InsertableQuestion, connection: &PgConnection) -> QueryResult<Question> {
-    diesel::insert_into(questions::table)
+    diesel::insert_into(anatomy_questions::table)
         .values(question)
         .get_result(connection)
 }
 
 pub fn update(id: i32, question: InsertableQuestion, connection: &PgConnection) -> QueryResult<Question> {
-    diesel::update(questions::table.find(id))
+    diesel::update(anatomy_questions::table.find(id))
         .set(&question)
         .get_result(connection)
 }
 
 pub fn delete(id: i32, connection: &PgConnection) -> QueryResult<usize> {
-    diesel::delete(questions::table.find(id)).execute(connection)
+    diesel::delete(anatomy_questions::table.find(id)).execute(connection)
 }

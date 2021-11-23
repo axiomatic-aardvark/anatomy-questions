@@ -1,19 +1,19 @@
-use crate::questions;
+use crate::anatomy_questions;
 use crate::connection;
 use rocket;
 
 fn setup_rocket() -> rocket::Rocket {
     rocket::ignite().manage(connection::init_pool()).mount(
-        "/anatomy",
+        "/",
         routes![
-            questions::handler::all,
-            questions::handler::get,
-            questions::handler::find_by_name,
-            questions::handler::find_by_kind,
-            questions::handler::rand,
-            questions::handler::post,
-            questions::handler::put,
-            questions::handler::delete
+            anatomy_questions::handler::all,
+            anatomy_questions::handler::get,
+            anatomy_questions::handler::find_by_name,
+            anatomy_questions::handler::find_by_kind,
+            anatomy_questions::handler::rand,
+            anatomy_questions::handler::post,
+            anatomy_questions::handler::put,
+            anatomy_questions::handler::delete
         ],
     )
 }
@@ -25,7 +25,7 @@ pub fn create_routes() {
 // #[cfg(test)]
 // mod test {
 //     use super::setup_rocket;
-//     use crate::questions::Question;
+//     use crate::anatomy_questions::Question;
 //     use rocket::http::{ContentType, Status};
 //     use rocket::local::Client;
 
@@ -48,7 +48,7 @@ pub fn create_routes() {
 //         }"#;
 
 //         let mut response = client
-//             .post("/questions")
+//             .post("/anatomy_questions")
 //             .body(question_json)
 //             .header(ContentType::JSON)
 //             .dispatch();

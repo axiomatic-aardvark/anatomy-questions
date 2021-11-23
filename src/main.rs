@@ -10,11 +10,11 @@ extern crate serde_derive;
 
 use dotenv::dotenv;
 
-mod questions;
+mod anatomy_questions;
 mod schema;
 mod connection;
 
 fn main() {
     dotenv().ok();
-    questions::router::create_routes();
+    anatomy_questions::router::create_routes();
 }
