@@ -4,7 +4,7 @@ use rocket;
 
 fn setup_rocket() -> rocket::Rocket {
     rocket::ignite().manage(connection::init_pool()).mount(
-        "/questions",
+        "/",
         routes![
             questions::handler::all,
             questions::handler::get,
