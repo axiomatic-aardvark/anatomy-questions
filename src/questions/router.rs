@@ -10,7 +10,6 @@ fn setup_rocket() -> rocket::Rocket {
             questions::handler::get,
             questions::handler::find_by_name,
             questions::handler::find_by_kind,
-            questions::handler::get_anatomy,
             questions::handler::rand,
             questions::handler::post,
             questions::handler::put,
