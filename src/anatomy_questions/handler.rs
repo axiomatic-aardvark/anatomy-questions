@@ -16,6 +16,7 @@ pub fn all(connection: DbConn) -> Result<Json<Vec<Question>>, Status> {
 }
 
 fn error_status(error: Error) -> Status {
+    println!("{:?}", error);
     match error {
         Error::NotFound => Status::NotFound,
         _ => Status::InternalServerError,
