@@ -7,10 +7,6 @@ fn setup_rocket() -> rocket::Rocket {
         "/",
         routes![
             anatomy_questions::handler::all,
-            anatomy_questions::handler::get,
-            anatomy_questions::handler::find_by_name,
-            anatomy_questions::handler::find_by_kind,
-            anatomy_questions::handler::rand,
             anatomy_questions::handler::post,
             anatomy_questions::handler::put,
             anatomy_questions::handler::delete
